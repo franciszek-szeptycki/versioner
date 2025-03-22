@@ -10,3 +10,7 @@ type IFileAdapter interface {
 
 	WriteJsonFile(path string, data any) error
 }
+
+type ICLIAskUserInputAdapter interface {
+	AskUserInput(question string) string
+}

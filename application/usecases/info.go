@@ -2,24 +2,40 @@ package usecases
 
 import (
 	"fmt"
+	"path/filepath"
+	"versioner/adapters"
+	"versioner/application/constants"
 	"versioner/application/services"
 )
 
 type InfoUseCase struct {
-	getInfoService services.GetProjectInfoService
+	getVersionerPath services.GetVersionerPathService
+	getInfoService   services.GetVersionerInfoService
 }
 
-func NewInfoUseCase(getInfoService services.GetProjectInfoService) *InfoUseCase {
+func NewInfoUseCase() *InfoUseCase {
+
+	fileAdapter := adapters.NewFileAdapter()
+
 	return &InfoUseCase{
-		getInfoService: getInfoService,
+		getVersionerPath: *services.NewGetVersionerPathService(fileAdapter),
+		getInfoService:   *services.NewGetVersionerInfoService(fileAdapter),
 	}
 }
 
 func (i InfoUseCase) Execute() {
-	config, err := i.getInfoService.Execute()
+	versionerPath, err := i.getVersionerPath.Execute()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+
+	versionerConfigPath := filepath.Join(versionerPath, constants.VersionerConfigFileName)
+	config, err := i.getInfoService.Execute(versionerConfigPath)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	fmt.Println(config)
 }
