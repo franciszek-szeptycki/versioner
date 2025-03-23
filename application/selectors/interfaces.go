@@ -14,6 +14,7 @@ type IFileAdapter interface {
 	CopyDir(src, dst string, ignoredPaths []string) error
 	CopyFile(src, dst string) error
 	ReadJsonFile(path string, dto interface{}) error
+	ListDirs(path string) ([]string, error)
 }
 
 type ICLIUserInputAdapter interface {

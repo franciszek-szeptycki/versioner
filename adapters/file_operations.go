@@ -3,6 +3,7 @@ package adapters
 import (
 	"bufio"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -174,4 +175,19 @@ func (fa *FileAdapter) CopyFile(src, dst string) error {
 
 	_, err = io.Copy(dstFile, srcFile)
 	return err
+}
+
+func (fa *FileAdapter) ListDirs(path string) ([]string, error) {
+	files, err := os.ReadDir(path)
+	if err != nil {
+		fmt.Println("Błąd:", err)
+		return nil, err
+	}
+	var dirs []string
+	for _, file := range files {
+		if file.IsDir() {
+			dirs = append(dirs, file.Name())
+		}
+	}
+	return dirs, nil
 }
