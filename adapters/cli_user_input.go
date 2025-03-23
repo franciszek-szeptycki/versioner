@@ -6,13 +6,13 @@ import (
 	"os"
 )
 
-type CLIAskUserInputAdapter struct{}
+type CLIUserInputAdapter struct{}
 
-func NewCLIAskUserInputAdapter() *CLIAskUserInputAdapter {
-	return &CLIAskUserInputAdapter{}
+func NewCLIUserInputAdapter() *CLIUserInputAdapter {
+	return &CLIUserInputAdapter{}
 }
 
-func (c *CLIAskUserInputAdapter) AskUserInput(question string) string {
+func (c *CLIUserInputAdapter) AskUserInput(question string) string {
 	fmt.Println(question + ": ")
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()

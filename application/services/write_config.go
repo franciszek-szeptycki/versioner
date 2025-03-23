@@ -13,7 +13,5 @@ func NewWriteConfigService(fileAdapter selectors.IFileAdapter) *WriteConfigServi
 }
 
 func (w *WriteConfigService) Execute(path string, data any) error {
-
-	err := w.fileAdapter.WriteJsonFile(path, data)
-	return err
+	return w.fileAdapter.WriteJsonFile(path, data)
 }

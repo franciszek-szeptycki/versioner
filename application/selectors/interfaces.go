@@ -9,8 +9,12 @@ type IFileAdapter interface {
 	CreateFile(path string) error
 
 	WriteJsonFile(path string, data any) error
+
+	ReadFile(path string) ([]string, error)
+	CopyDir(src, dst string, ignoredPaths []string) error
+	CopyFile(src, dst string) error
 }
 
-type ICLIAskUserInputAdapter interface {
+type ICLIUserInputAdapter interface {
 	AskUserInput(question string) string
 }

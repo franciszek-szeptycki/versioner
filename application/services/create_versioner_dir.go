@@ -19,7 +19,7 @@ func NewCreateVersionerService(fileAdapter selectors.IFileAdapter) *CreateVersio
 func (i *CreateVersionerService) Execute() (string, error) {
 	currentPath := i.fileAdapter.GetCurrentDir()
 
-	versionerPath := filepath.Join(currentPath, constants.VersionerDirName)
+	versionerPath := filepath.Join(currentPath, constants.VersionerDir)
 	err := i.fileAdapter.CreateDir(versionerPath)
 	return versionerPath, err
 }

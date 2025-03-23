@@ -1,6 +1,11 @@
 package constants
 
 const (
-	VersionerDirName        = ".versioner"
-	VersionerConfigFileName = ".versionerconfig.json"
+	VersionerDir    = ".versioner"
+	VersionerConfig = ".versionerconfig.json"
+	VersionerIgnore = ".versionerignore"
+)
+
+var (
+	IgnoreFiles = []string{VersionerIgnore, VersionerDir, ".git", ".gitignore"}
 )

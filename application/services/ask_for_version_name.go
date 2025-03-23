@@ -7,10 +7,10 @@ import (
 )
 
 type AskForVersionNameService struct {
-	cliAskUserInputAdapter selectors.ICLIAskUserInputAdapter
+	cliAskUserInputAdapter selectors.ICLIUserInputAdapter
 }
 
-func NewAskForVersionNameService(cliUserInputAdapter selectors.ICLIAskUserInputAdapter) *AskForVersionNameService {
+func NewAskForVersionNameService(cliUserInputAdapter selectors.ICLIUserInputAdapter) *AskForVersionNameService {
 	return &AskForVersionNameService{
 		cliAskUserInputAdapter: cliUserInputAdapter,
 	}

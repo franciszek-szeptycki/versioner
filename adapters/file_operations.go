@@ -1,11 +1,14 @@
 package adapters
 
 import (
+	"bufio"
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"versioner/application/selectors"
 )
 
@@ -84,4 +87,72 @@ func (fa *FileAdapter) WriteJsonFile(path string, data any) error {
 	}
 
 	return nil
+}
+
+func (fa *FileAdapter) ReadFile(path string) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+
+	return lines, nil
+}
+
+func (fa *FileAdapter) CopyDir(srcDir, dstDir string, ignoredPaths []string) error {
+	ignoredSet := make(map[string]struct{})
+	for _, ignore := range ignoredPaths {
+		ignoredSet[ignore] = struct{}{}
+	}
+
+	return filepath.WalkDir(srcDir, func(path string, d os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		for ignore := range ignoredSet {
+			if strings.Contains(path, ignore) {
+				return nil
+			}
+		}
+
+		relPath, err := filepath.Rel(srcDir, path)
+		if err != nil {
+			return err
+		}
+		destPath := filepath.Join(dstDir, relPath)
+
+		if d.IsDir() {
+			return os.MkdirAll(destPath, os.ModePerm)
+		}
+
+		return fa.CopyFile(path, destPath)
+	})
+}
+
+func (fa *FileAdapter) CopyFile(src, dst string) error {
+	srcFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer srcFile.Close()
+
+	dstFile, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer dstFile.Close()
+
+	_, err = io.Copy(dstFile, srcFile)
+	return err
 }

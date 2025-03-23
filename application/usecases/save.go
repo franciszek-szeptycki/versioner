@@ -15,7 +15,7 @@ type SaveUseCase struct {
 
 func NewSaveUseCase() *SaveUseCase {
 	fileAdapter := adapters.NewFileAdapter()
-	cliInputAdapter := adapters.NewCLIAskUserInputAdapter()
+	cliInputAdapter := adapters.NewCLIUserInputAdapter()
 
 	return &SaveUseCase{
 		askForVersionNameService: *services.NewAskForVersionNameService(cliInputAdapter),
@@ -25,13 +25,13 @@ func NewSaveUseCase() *SaveUseCase {
 }
 
 func (s *SaveUseCase) Execute() {
-	version := s.askForVersionNameService.Execute()
-
 	versionerPath, err := s.getVersionerPathService.Execute()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
+	version := s.askForVersionNameService.Execute()
 	s.createVersionService.Execute(filepath.Join(versionerPath, version))
+
 }

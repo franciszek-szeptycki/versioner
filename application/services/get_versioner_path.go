@@ -22,7 +22,7 @@ func (g *GetVersionerPathService) Execute() (string, error) {
 	currentPath := g.fileAdapter.GetCurrentDir()
 
 	for {
-		versionerPath := filepath.Join(currentPath, constants.VersionerDirName)
+		versionerPath := filepath.Join(currentPath, constants.VersionerDir)
 		if g.fileAdapter.CheckIfDirExists(versionerPath) {
 			return versionerPath, nil
 		}

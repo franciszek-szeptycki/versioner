@@ -40,6 +40,6 @@ func (i *InitUseCase) Execute() {
 		fmt.Println(err)
 		return
 	}
-	configPath := filepath.Join(versionerPath, constants.VersionerConfigFileName)
+	configPath := filepath.Join(versionerPath, constants.VersionerConfig)
 	i.writeConfigService.Execute(configPath, struct{}{})
 }

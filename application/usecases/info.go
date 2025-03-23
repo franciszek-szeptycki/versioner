@@ -30,7 +30,7 @@ func (i InfoUseCase) Execute() {
 		return
 	}
 
-	versionerConfigPath := filepath.Join(versionerPath, constants.VersionerConfigFileName)
+	versionerConfigPath := filepath.Join(versionerPath, constants.VersionerConfig)
 	config, err := i.getInfoService.Execute(versionerConfigPath)
 	if err != nil {
 		fmt.Println(err)
