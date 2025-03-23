@@ -19,15 +19,15 @@ func (l *LoadVersionService) Execute(versionPath string) error {
 	ignoreFiles := constants.IgnoreFiles
 
 	currentPath := l.fileAdapter.GetCurrentDir()
-	//err := l.fileAdapter.RemoveDir(currentPath, ignoreFiles)
-	//if err != nil {
-	//	return err
-	//}
-
-	err := l.fileAdapter.CopyDir(versionPath, currentPath, ignoreFiles)
+	err := l.fileAdapter.RemoveDir(currentPath, ignoreFiles)
 	if err != nil {
 		return err
 	}
+
+	//err := l.fileAdapter.CopyDir(versionPath, currentPath, ignoreFiles)
+	//if err != nil {
+	//	return err
+	//}
 
 	return nil
 }

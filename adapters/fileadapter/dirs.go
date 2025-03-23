@@ -95,6 +95,14 @@ func (fa *FileAdapter) RemoveDir(srcDir string, ignoredPaths []string) error {
 			}
 		}
 
+		if path == srcDir {
+			return nil
+		}
+
+		if d.IsDir() {
+			return nil
+		}
+
 		return os.Remove(path)
 	})
 }
