@@ -3,7 +3,7 @@ package usecases
 import (
 	"fmt"
 	"path/filepath"
-	"versioner/adapters"
+	"versioner/adapters/fileadapter"
 	"versioner/application/constants"
 	"versioner/application/services"
 )
@@ -16,7 +16,7 @@ type InitUseCase struct {
 
 func NewInitUseCase() *InitUseCase {
 
-	fileAdapter := adapters.NewFileAdapter()
+	fileAdapter := fileadapter.NewFileAdapter()
 
 	createVersionerService := *services.NewCreateVersionerService(fileAdapter)
 	getVersionerPathService := *services.NewGetVersionerPathService(fileAdapter)

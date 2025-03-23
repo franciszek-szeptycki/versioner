@@ -21,5 +21,15 @@ func (i *CreateVersionerService) Execute() (string, error) {
 
 	versionerPath := filepath.Join(currentPath, constants.VersionerDir)
 	err := i.fileAdapter.CreateDir(versionerPath)
+	if err != nil {
+		return "", err
+	}
+
+	versionerIgnorePath := filepath.Join(currentPath, constants.VersionerIgnore)
+	err = i.fileAdapter.CreateFile(versionerIgnorePath)
+	if err != nil {
+		return "", nil
+	}
+
 	return versionerPath, err
 }

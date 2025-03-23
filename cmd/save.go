@@ -15,8 +15,12 @@ var saveCmd = &cobra.Command{
 	Short: "A brief description of your command",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("save called")
+		if len(args) == 0 {
+			fmt.Println("no version provided")
+			return
+		}
 		saveUseCase := usecases.NewSaveUseCase()
-		saveUseCase.Execute()
+		saveUseCase.Execute(args[0])
 	},
 }
 

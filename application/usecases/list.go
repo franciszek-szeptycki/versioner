@@ -2,7 +2,7 @@ package usecases
 
 import (
 	"fmt"
-	"versioner/application/selectors"
+	"versioner/adapters/fileadapter"
 	"versioner/application/services"
 )
 
@@ -11,7 +11,10 @@ type ListUseCase struct {
 	listVersionsService     services.ListVersionsService
 }
 
-func NewListUseCase(fileAdapter selectors.IFileAdapter) *ListUseCase {
+func NewListUseCase() *ListUseCase {
+
+	fileAdapter := fileadapter.NewFileAdapter()
+
 	return &ListUseCase{
 		getVersionerPathService: *services.NewGetVersionerPathService(fileAdapter),
 		listVersionsService:     *services.NewListVersionsService(fileAdapter),

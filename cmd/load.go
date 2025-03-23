@@ -5,24 +5,25 @@ package cmd
 
 import (
 	"fmt"
-
 	"versioner/application/usecases"
 
 	"github.com/spf13/cobra"
 )
 
-var infoCmd = &cobra.Command{
-	Use:   "info",
+var loadCmd = &cobra.Command{
+	Use:   "load",
 	Short: "A brief description of your command",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("info called")
-
-		infoUseCase := usecases.NewInfoUseCase()
-
-		infoUseCase.Execute()
+		fmt.Println("load called")
+		if len(args) == 0 {
+			fmt.Println("no version provided")
+			return
+		}
+		loadUseCase := usecases.NewLoadUseCase()
+		loadUseCase.Execute(args[0])
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(infoCmd)
+	rootCmd.AddCommand(loadCmd)
 }
