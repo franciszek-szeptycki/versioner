@@ -89,6 +89,25 @@ func (fa *FileAdapter) WriteJsonFile(path string, data any) error {
 	return nil
 }
 
+func (fa *FileAdapter) ReadJsonFile(path string, dto interface{}) error {
+	file, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	byteValue, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	if err := json.Unmarshal(byteValue, dto); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (fa *FileAdapter) ReadFile(path string) ([]string, error) {
 	file, err := os.Open(path)
 	if err != nil {

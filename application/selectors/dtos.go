@@ -1,5 +1,5 @@
 package selectors
 
 type VersionerConfigDTO struct {
-	ProjectPath *string `json:"projectPath"`
+	CurrentVersion *string `json:"currentVersion"`
 }

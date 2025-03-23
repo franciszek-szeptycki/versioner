@@ -23,11 +23,7 @@ func (a *AskForVersionNameService) Execute() string {
 		versionName = a.cliAskUserInputAdapter.AskUserInput("Enter new version name")
 		sanitizedString := a.sanitizeString(versionName)
 
-		approveQuestion := "'" + sanitizedString + "'" + " that will be your version name, ok? ([y]/n]) "
-		approve := a.cliAskUserInputAdapter.AskUserInput(approveQuestion)
-		if approve == "" || approve == "y" {
-			return sanitizedString
-		}
+		return sanitizedString
 	}
 }
 

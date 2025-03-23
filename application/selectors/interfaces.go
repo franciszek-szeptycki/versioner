@@ -13,6 +13,7 @@ type IFileAdapter interface {
 	ReadFile(path string) ([]string, error)
 	CopyDir(src, dst string, ignoredPaths []string) error
 	CopyFile(src, dst string) error
+	ReadJsonFile(path string, dto interface{}) error
 }
 
 type ICLIUserInputAdapter interface {
