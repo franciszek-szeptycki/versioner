@@ -2,6 +2,7 @@ package usecases
 
 import (
 	"fmt"
+	"path/filepath"
 	"versioner/adapters/fileadapter"
 	"versioner/application/services"
 )
@@ -37,7 +38,8 @@ func (l *LoadUseCase) Execute(version string) {
 
 	for _, availableVersion := range availableVersions {
 		if availableVersion == version {
-			err = l.loadVersionService.Execute(versionerPath, version)
+			versionPath := filepath.Join(versionerPath, version)
+			err = l.loadVersionService.Execute(versionPath)
 			if err != nil {
 				fmt.Println(err)
 				return
