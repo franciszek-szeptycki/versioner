@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"versioner/application/constants"
 	"versioner/application/selectors"
 )
@@ -17,17 +18,19 @@ func NewLoadVersionService(fileAdapter selectors.IFileAdapter) *LoadVersionServi
 
 func (l *LoadVersionService) Execute(versionPath string) error {
 	ignoreFiles := constants.IgnoreFiles
+	var err error
 
 	currentPath := l.fileAdapter.GetCurrentDir()
-	err := l.fileAdapter.RemoveDir(currentPath, ignoreFiles)
+	err = l.fileAdapter.RemoveDir(currentPath, ignoreFiles)
 	if err != nil {
 		return err
 	}
 
-	//err := l.fileAdapter.CopyDir(versionPath, currentPath, ignoreFiles)
-	//if err != nil {
-	//	return err
-	//}
+	fmt.Println(versionPath)
+	err = l.fileAdapter.CopyDir(versionPath, currentPath, ignoreFiles)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
